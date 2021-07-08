@@ -1,16 +1,14 @@
-from math import sqrt, ceil, floor
+from math import sqrt, floor
 
 OUTPUT_FILE = 'primes.txt'
 
-def get_prime_numbers(n):
-    seq = []
+def primes_generator(n):  # Algorithm with order of O(n^(3/2))
     for i in range(2, n):
         for j in range(2, floor(sqrt(i)) + 1):
-            if i % j == 0:
+            if i%j == 0:
                 break
         else:
-            seq.append(i)
-    return seq
+            yield i
 
 
 def write_to_file(seq):
@@ -20,8 +18,8 @@ def write_to_file(seq):
 
 
 def main():
-    n = 50
-    seq = get_prime_numbers(n)
+    n = 10000
+    seq = primes_generator(n)
     write_to_file(seq)
 
 
