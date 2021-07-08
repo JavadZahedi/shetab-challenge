@@ -18,7 +18,7 @@ def write_to_file(seq):
 
 
 def main():
-    n = 10000
+    n = 1000000
     seq = primes_generator(n)
     write_to_file(seq)
 
