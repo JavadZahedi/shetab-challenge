@@ -6,8 +6,8 @@ app = Flask(__name__)
 def index():
     if request.method == 'POST':
         params = ['a1', 'b1', 'c1', 'd1', 'a2', 'b2', 'c2', 'd2']
-        image_path = draw_function(*[int(request.form[p]) for p in params])
-        return render_template('index.html', image_path=image_path)
+        plot = draw_function(*[int(request.form[p]) for p in params])
+        return render_template('index.html', plot=plot)
     else:
         return render_template('index.html')
 

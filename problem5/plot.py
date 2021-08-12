@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
-import uuid
+import io
+import base64
 
 def draw_function(a1, b1, c1, d1, a2, b2, c2, d2):
     x = np.linspace(0, 100, 5000)
@@ -20,10 +21,11 @@ def draw_function(a1, b1, c1, d1, a2, b2, c2, d2):
     plt.plot(x,y2, 'c', label=f'y=({a2})(x^3)+({b2})(x^2)+({c2})(x)+({d2})')
     plt.legend(loc='best')
     
-    unique_id = uuid.uuid1().hex
-    image_path = f'static/images/{unique_id}.jpg'
-    plt.savefig(image_path)
-    return image_path
+    img = io.BytesIO()
+    plt.savefig(img, format='png')
+    img.seek(0)
+    plot_url = base64.b64encode(img.getvalue()).decode()
+    return f'data:image/png;base64,{plot_url}'
 
 
 if __name__ == '__main__':
