@@ -12,7 +12,7 @@ def is_abundant(n: int) -> bool:
 def get_abundants_under(n: int) -> tuple:
     return tuple(filter(lambda x: is_abundant(x), range(12,n)))
 
-LIMIT = 28123
+LIMIT = 28124
 
 def main():
     abundants = get_abundants_under(LIMIT)

@@ -1,0 +1,21 @@
+body {
+    background-image: url('../images/bg_image.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    min-height: 100vh;
+    padding: 10px;
+}
+
+.spline-form {
+    max-width: 400px;
+    background-color: #faebd798;
+}
+
+.plot {
+    max-width: 600px;
+}
+
+input {
+    width: 100px;
+}
