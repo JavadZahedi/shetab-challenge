@@ -3,23 +3,64 @@ import matplotlib.pyplot as plt
 import io
 import base64
 
-def draw_function(a1, b1, c1, d1, a2, b2, c2, d2):
-    x = np.linspace(0, 100, 5000)
-    y1 = a1*x**3 + b1*x**2 + c1*x + d1
-    y2 = a2*x**3 + b2*x**2 + c2*x + d2
+LINESPACE_LEN = 50000
+ORDER = 3
 
-    fig = plt.figure()
-    ax = fig.add_subplot(1, 1, 1)
-    ax.spines['left'].set_position('center')
-    ax.spines['bottom'].set_position('center')
-    ax.spines['right'].set_color('none')
-    ax.spines['top'].set_color('none')
-    ax.xaxis.set_ticks_position('bottom')
-    ax.yaxis.set_ticks_position('left')
+def make_y(params, x):
+    y = np.array([0.0] * LINESPACE_LEN)
+    for i in range(ORDER + 1):
+        y += params[i] * (x ** (ORDER-i))
+    return y
 
-    plt.plot(x,y1, 'b', label=f'y=({a1})(x^3)+({b1})(x^2)+({c1})(x)+({d1})')
-    plt.plot(x,y2, 'c', label=f'y=({a2})(x^3)+({b2})(x^2)+({c2})(x)+({d2})')
-    plt.legend(loc='best')
+def sign(x):
+    if x >= 0:
+        return '+'
+    return '-'
+        
+
+def make_term(ratio, exp):
+    if abs(ratio) == 1:
+        if exp == 0:
+            return f'{sign(ratio)} 1'
+        elif exp == 1:
+            return f'{sign(ratio)} x'
+        else:
+            return f'{sign(ratio)} x^{exp}'
+    else:
+        if exp == 0:
+            return f'{sign(ratio)} {abs(ratio)}'
+        elif exp == 1:
+            return f'{sign(ratio)} {abs(ratio)}x'
+        else:
+            return f'{sign(ratio)} {abs(ratio)}x^{exp}'
+
+
+def make_label(params):
+    terms = [make_term(params[i], ORDER-i)
+             for i in range(ORDER+1) if params[i] != 0]
+    if terms:
+        return ' '.join(['y =', *terms])
+    else:
+        return 'y = 0'
+
+
+def draw_function(*args):
+    assert len(args) == (ORDER+1) * 2
+    x = np.linspace(0, 100, LINESPACE_LEN)
+    y1 = make_y(args[:ORDER+1], x)
+    y2 = make_y(args[ORDER+1:], x)
+
+    fig, ax = plt.subplots()
+    ax.axhline(y=0, color='k')
+    ax.axvline(x=0, color='k')
+
+    plt.plot(x, y1, color='blue', label=make_label(args[:ORDER+1]))
+    plt.plot(x, y2, color='red', label=make_label(args[ORDER+1:]))
+    plt.title('Two functions\' graphs in [0,100] domain', font='serif')
+    plt.xlabel('x')
+    plt.ylabel('y')
+    plt.grid()
+    plt.legend()
     
     img = io.BytesIO()
     plt.savefig(img, format='png')

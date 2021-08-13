@@ -20,8 +20,10 @@
 </head>
 <body>
     {% if plot %}
-        <img src="{{ plot }}"
-            class='rounded border d-block mx-auto plot'>
+        <div class='mx-auto plot'>
+            <img src="{{ plot }}"
+            class='w-100 rounded border d-block'>
+        </div>
         <div class='w-100 p-1 text-center'>
             <a href='/' class='btn btn-primary'>try agian</a>
         </div>
@@ -31,7 +33,7 @@
                 Enter a, b, c, d parameters for<br> y = ax^3+bx^2+cx+d function
             </div>
             <div class='row w-100 m-0 p-0'>
-                <div class='col-sm-6 m-0 p-0'>
+                <div class='col-sm-6 text-center m-0 p-0'>
                     <div>First function:</div>
                     <div class='p-1 m-0'>
                         <div class='p-2'>
@@ -55,7 +57,7 @@
                         </div>
                     </div>
                 </div>
-                <div class='col-sm-6 m-0 p-0'>
+                <div class='col-sm-6 text-center m-0 p-0'>
                     <div>Second function:</div>
                     <div class='p-1 m-0'>
                         <div class='p-2'>
